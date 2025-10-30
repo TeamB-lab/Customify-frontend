@@ -6,22 +6,7 @@
         <div class="flex items-center">
           <h1 class="text-2xl font-bold text-gray-800">Customify</h1>
         </div>
-
-        <!-- Search Bar -->
-        <div class="flex-1 max-w-lg mx-8">
-          <div class="relative">
-            <input 
-              type="text" 
-              placeholder="Search products..." 
-              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              v-model="searchQuery"
-            >
-            <span class="absolute right-3 top-2 text-gray-400">
-              🔍
-            </span>
-          </div>
-        </div>
-
+        
         <!-- Navigation Links -->
         <div class="flex items-center space-x-6">
           <a href="#" class="text-gray-700 hover:text-blue-600 transition-colors duration-200">Home</a>
