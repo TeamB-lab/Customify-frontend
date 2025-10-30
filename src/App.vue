@@ -4,7 +4,7 @@
 
 <template>
   <div>
-    <h1>Il mio Progetto Vue Funziona!</h1>
+    <h1>The official website for Customify!</h1>
     <p>Ora possiamo iniziare a costruire.</p>
   </div>
 </template>
