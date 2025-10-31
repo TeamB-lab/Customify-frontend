@@ -2,10 +2,18 @@
   <nav class="bg-white shadow-lg sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4">
       <div class="flex justify-between items-center h-16">
-        <!-- Logo -->
-        <div class="flex items-center">
-          <h1 class="text-2xl font-bold text-gray-800">Customify</h1>
-        </div>
+       <!-- Logo -->
+<div class="flex items-center space-x-3">
+  <img 
+    src="/src/assets/logo.png" 
+    alt="Customify Logo" 
+    class="w-10 h-10 object-contain scale-110"
+  />
+  <h1 class="text-2xl font-bold text-gray-800 tracking-tight">
+    Customify
+  </h1>
+</div>
+
         
         <!-- Navigation Links -->
         <div class="flex items-center space-x-6">

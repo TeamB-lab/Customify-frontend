@@ -1,5 +1,6 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
+  <div class="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-cyan-50">
+
     <!-- Navbar -->
     <Navbar @toggle-cart="isCartOpen = true" />
 
@@ -8,22 +9,42 @@
 
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 py-8">
+
       <!-- Hero Section -->
-      <section class="bg-gradient-to-r from-red-600 to-purple-700 rounded-2xl text-white p-8 mb-12">
-        <div class="text-center">
-          <h1 class="text-4xl font-bold mb-4">Welcome to Customify</h1>
-          <p class="text-xl mb-6">Discover amazing Customized and Trendy products at great prices</p>
-          <button class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-200">
-            Shop Now
+<section class="bg-gradient-to-r from-red-600 to-purple-700 rounded-2xl text-white p-8 mb-12 relative overflow-hidden">
+  <!-- Optional: floating shapes -->
+  <div class="absolute top-0 left-0 w-32 h-32 bg-white/20 rounded-full animate-bounce-slow"></div>
+  <div class="absolute bottom-0 right-0 w-48 h-48 bg-white/10 rounded-full animate-pulse-slow"></div>
+
+  <div class="text-center relative z-10">
+    <!-- Animated Heading -->
+    <h1 class="text-4xl md:text-5xl lg:text-6xl font-semibold mb-4 animate-slide-fade">
+      Welcome to <span class="bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-pink-400">Customify</span>
+    </h1>
+
+    <!-- Animated Subtext -->
+    <p class="text-xl mb-6 animate-slide-fade animate-delay-200">
+      Discover amazing Customized and Trendy products at great prices
+    </p>
+
+    <!-- Animated Button -->
+    <button class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-300 animate-bounce hover:scale-105">
+      Shop Now
+    </button>
+  </div>
+</section>
+
+
+    <!-- Featured Products --> 
+      <section class="mb-12">
+        <div class="flex justify-between items-center mb-6">
+          <div class="flex-1 text-center">
+            <h2 class="text-3xl font-bold text-gray-800">Featured Products</h2>
+          </div>
+          <button class="text-blue-600 hover:text-blue-700 font-semibold transition-colors duration-200">
+            View All →
           </button>
         </div>
-      </section>
-
-     <!-- Featured Products --> 
-      <section class="mb-12"> <div class="flex justify-between items-center mb-6"> 
-        <h2 class="text-3xl font-bold text-gray-800">Featured Products</h2> 
-        <button class="text-blue-600 hover:text-blue-700 font-semibold transition-colors duration-200"> View All → </button> </div> 
-       
         <!-- Products Grid --> 
          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"> 
           <ProductCard 

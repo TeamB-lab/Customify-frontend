@@ -16,4 +16,34 @@
     @apply bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200;
   }
 }
- 
+ /* Slide up + fade in */
+@keyframes slideFade {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-fade {
+  animation: slideFade 1s ease-out forwards;
+}
+
+.animate-delay-200 {
+  animation-delay: 0.2s;
+}
+
+/* Slow bounce for shapes */
+@keyframes bounceSlow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+.animate-bounce-slow {
+  animation: bounceSlow 4s ease-in-out infinite;
+}
+.animate-pulse-slow {
+  animation: bounceSlow 6s ease-in-out infinite;
+}
