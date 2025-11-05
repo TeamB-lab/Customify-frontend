@@ -11,28 +11,39 @@
     <main class="max-w-7xl mx-auto px-4 py-8">
 
       <!-- Hero Section -->
-<section class="bg-gradient-to-r from-red-600 to-purple-700 rounded-2xl text-white p-8 mb-12 relative overflow-hidden">
-  <!-- Optional: floating shapes -->
+<section 
+  class="relative overflow-hidden rounded-2xl mb-12 bg-gradient-to-r
+   from-red-500 via-pink-500 to-purple-500 text-gray-800
+   px-6 py-16 md:py-28">
+  
+  <!-- Floating Shapes -->
   <div class="absolute top-0 left-0 w-32 h-32 bg-white/20 rounded-full animate-bounce-slow"></div>
   <div class="absolute bottom-0 right-0 w-48 h-48 bg-white/10 rounded-full animate-pulse-slow"></div>
+  <div class="max-w-5xl mx-auto text-center md:text-left relative z-10">
 
-  <div class="text-center relative z-10">
-    <!-- Animated Heading -->
-    <h1 class="text-4xl md:text-5xl lg:text-6xl font-semibold mb-4 animate-slide-fade">
-      Welcome to <span class="bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-pink-400">Customify</span>
+    <!-- Heading -->
+    <h1 class="text-4xl md:text-5xl lg:text-6xl font-heading font-extrabold mb-6 animate-slide-fade">
+      Welcome to 
+      <span class="bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-gray-300">
+        Customify
+      </span>
     </h1>
 
-    <!-- Animated Subtext -->
-    <p class="text-xl mb-6 animate-slide-fade animate-delay-200">
-      Discover amazing Customized and Trendy products at great prices
+    <!-- Subtext -->
+    <p class="text-lg md:text-xl lg:text-xl font-heading font-medium mb-8 animate-slide-fade animate-delay-200">
+      Discover amazing customized and trendy products at unbeatable prices.
     </p>
 
-    <!-- Animated Button -->
-    <button class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-300 animate-bounce hover:scale-105">
-      Shop Now
-    </button>
+    <!-- Buttons -->
+    <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+      <div class="flex-1 text-center"></div>  
+      <button class="bg-white text-red-500 px-8 py-4 rounded-2xl font-bold text-lg hover:scale-105 transform transition-all duration-300 shadow-lg hover:shadow-xl animate-bounce">
+        Shop Collection
+      </button>
+    </div>
   </div>
 </section>
+
 
 
     <!-- Featured Products --> 
@@ -45,6 +56,7 @@
             View All →
           </button>
         </div>
+
         <!-- Products Grid --> 
          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"> 
           <ProductCard 
@@ -68,6 +80,7 @@
       </section>
     </main>
   </div> 
+
     <!-- Interactive Features Section -->
 <section class="py-20 bg-white">
   <div class="max-w-7xl mx-auto px-4">
@@ -126,6 +139,7 @@
     </div>
   </div>
 </section>
+
 <!-- Footer -->
     <Footer></Footer>
 </template>
