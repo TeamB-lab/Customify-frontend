@@ -194,6 +194,8 @@ import { productsAPI, handleApiError } from './Services/api'
 
 const isCartOpen = ref(false)
 const isFeaturesOpen = ref(false)
+const loading = ref(false)
+const error = ref(null)
 
 // Mock data
 const featuredProducts = ref([])
