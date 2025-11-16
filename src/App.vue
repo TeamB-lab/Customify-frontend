@@ -190,7 +190,7 @@ import Navbar from './components/Navbar.vue'
 import ProductCard from './components/ProductCard.vue'
 import CartSidebar from './components/CartSidebar.vue'
 import Footer from './components/Footer.vue'
-import { productsAPI, handleApiError } from './services/api.js'
+import { productsAPI, handleApiError } from './services/api'
 
 const isCartOpen = ref(false)
 const isFeaturesOpen = ref(false)
