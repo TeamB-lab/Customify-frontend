@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-  baseURL: 'https://customify-backend.onrender.com', 
-  timeout: 30000, 
+  baseURL: import.meta.env.VITE_API_BASE_URL || 'https://customify-backend.onrender.com',
+  timeout: 30000,
   headers: {
     'Content-Type': 'application/json',
   },
