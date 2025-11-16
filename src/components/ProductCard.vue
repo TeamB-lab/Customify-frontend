@@ -1,49 +1,106 @@
 <template>
-  <div class="card p-4">
+  <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 border border-gray-200">
+    <!-- Image with Discount Badge -->
     <div class="relative">
       <img 
         :src="product.image" 
         :alt="product.name"
-        class="w-full h-48 object-cover rounded-lg mb-4"
+        class="w-full h-48 object-cover"
+        @error="handleImageError"
       >
-      <span v-if="product.discount" class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded text-sm">
+      <span 
+        v-if="product.discount > 0" 
+        class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded-full text-sm font-bold"
+      >
         -{{ product.discount }}%
       </span>
     </div>
     
-    <h3 class="font-semibold text-lg mb-2 text-gray-800">{{ product.name }}</h3>
-    <p class="text-gray-600 text-sm mb-3">{{ product.description }}</p>
-    
-    <div class="flex items-center justify-between mb-4">
-      <div class="flex items-center space-x-2">
-        <span class="text-xl font-bold text-gray-800">${{ product.price }}</span>
-        <span v-if="product.originalPrice" class="text-sm text-gray-500 line-through">
-          ${{ product.originalPrice }}
-        </span>
+    <!-- Product Info -->
+    <div class="p-4">
+      <!-- Category Badge -->
+      <span class="inline-block bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded mb-2">
+        {{ product.category }}
+      </span>
+      
+      <!-- Product Name -->
+      <h3 class="font-semibold text-lg mb-2 text-gray-800 line-clamp-1">{{ product.name }}</h3>
+      
+      <!-- Description -->
+      <p class="text-gray-600 text-sm mb-3 line-clamp-2">{{ product.description }}</p>
+      
+      <!-- Price and Rating -->
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center space-x-2">
+          <span class="text-xl font-bold text-green-600">${{ product.price }}</span>
+          <span 
+            v-if="product.original_price && parseFloat(product.original_price) > parseFloat(product.price)" 
+            class="text-sm text-gray-500 line-through"
+          >
+            ${{ product.original_price }}
+          </span>
+        </div>
+        <div class="flex items-center">
+          <span class="text-yellow-400">⭐</span>
+          <span class="text-sm text-gray-600 ml-1">{{ product.rating }}</span>
+        </div>
       </div>
-      <div class="flex items-center">
-        <span class="text-yellow-400">⭐</span>
-        <span class="text-sm text-gray-600 ml-1">{{ product.rating }}</span>
-      </div>
+      
+      <!-- Add to Cart Button -->
+      <button 
+        @click="$emit('add-to-cart', product)"
+        class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg transition-all duration-200 flex items-center justify-center font-semibold hover:scale-105 transform"
+      >
+        <span>🛒</span>
+        <span class="ml-2">Add to Cart</span>
+      </button>
     </div>
-    
-    <button 
-      @click="$emit('add-to-cart', product)"
-      class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition-colors duration-200 flex items-center justify-center"
-    >
-      <span>🛒</span>
-      <span class="ml-2">Add to Cart</span>
-    </button>
   </div>
 </template>
 
 <script setup>
+// Props
 defineProps({
   product: {
     type: Object,
-    required: true
+    required: true,
+    default: () => ({
+      id: null,
+      name: '',
+      description: '',
+      price: '',
+      original_price: '', // CHANGED from originalPrice
+      discount: 0,
+      category: '',
+      image: '',
+      rating: '0'
+    })
   }
 })
 
+// Emits
 defineEmits(['add-to-cart'])
+
+// Image error handling
+const handleImageError = (event) => {
+  event.target.src = 'https://images.unsplash.com/photo-1556656793-08538906a9f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80';
+}
 </script>
+
+<style scoped>
+.line-clamp-1 {
+  line-clamp: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-2 {
+   line-clamp: 2;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+</style>
