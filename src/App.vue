@@ -211,8 +211,6 @@ const fetchProducts = async () => {
   } catch (err) {
     error.value = handleApiError(err);
     console.error('Error fetching products:', err);
-    // Fallback to mock data if API fails (optional)
-    // featuredProducts.value = fallbackMockData;
   } finally {
     loading.value = false;
   }
