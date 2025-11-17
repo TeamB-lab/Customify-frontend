@@ -46,21 +46,27 @@
         </div>
       </div>
       
-      <!-- Add to Cart Button -->
+      <!-- Add to Cart Button - Updated to use cart store -->
       <button 
-        @click="$emit('add-to-cart', product)"
-        class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg transition-all duration-200 flex items-center justify-center font-semibold hover:scale-105 transform"
+        @click="addToCart"
+        :class="[
+          'w-full py-3 rounded-lg transition-all duration-200 flex items-center justify-center font-semibold hover:scale-105 transform',
+          isInCart ? 'bg-green-600 hover:bg-green-700 text-white' : 'bg-blue-600 hover:bg-blue-700 text-white'
+        ]"
       >
         <span>🛒</span>
-        <span class="ml-2">Add to Cart</span>
+        <span class="ml-2">{{ isInCart ? `In Cart (${itemQuantity})` : 'Add to Cart' }}</span>
       </button>
     </div>
   </div>
 </template>
 
 <script setup>
-// Props
-defineProps({
+import { useCartStore } from '../cart.js'
+import { computed } from 'vue'
+
+// Props definition for product data
+const props = defineProps({
   product: {
     type: Object,
     required: true,
@@ -69,7 +75,7 @@ defineProps({
       name: '',
       description: '',
       price: '',
-      original_price: '', // CHANGED from originalPrice
+      original_price: '', // Changed from originalPrice to match API
       discount: 0,
       category: '',
       image: '',
@@ -78,10 +84,25 @@ defineProps({
   }
 })
 
-// Emits
-defineEmits(['add-to-cart'])
+// Initialize cart store
+const cartStore = useCartStore()
 
-// Image error handling
+// Computed property to check if product is in cart
+const isInCart = computed(() => 
+  cartStore.isInCart(props.product.id)
+)
+
+// Computed property to get quantity of product in cart
+const itemQuantity = computed(() => 
+  cartStore.getItemQuantity(props.product.id)
+)
+
+// Method to add product to cart
+const addToCart = () => {
+  cartStore.addItem(props.product)
+}
+
+// Handle image loading errors
 const handleImageError = (event) => {
   event.target.src = 'https://images.unsplash.com/photo-1556656793-08538906a9f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80';
 }
