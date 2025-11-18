@@ -179,7 +179,7 @@ import Navbar from './components/Navbar.vue'
 import ProductCard from './components/ProductCard.vue'
 import CartSidebar from './components/CartSidebar.vue'
 import Footer from './components/Footer.vue'
-import { productsAPI, handleApiError } from './services/api.js'
+import { productsAPI, handleApiError } from './Services/api'
 
 const isCartOpen = ref(false)
 
@@ -198,53 +198,6 @@ const fetchProducts = async () => {
     console.log('Products loaded successfully:', featuredProducts.value.length);
   } catch (err) {
     console.error('Error fetching products:', err);
-    // Fallback to mock data if API fails
-    featuredProducts.value = [
-      {
-        id: 101,
-        name: 'Custom Printed T-Shirt',
-        description: 'High-quality cotton t-shirt with custom printing options.',
-        price: 24.99,
-        original_price: 29.99,
-        discount: 17,
-        category: 'T-Shirts',
-        image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80',
-        rating: '4.5'
-      },
-      {
-        id: 102,
-        name: 'Premium Hoodie',
-        description: 'Warm and comfortable hoodie with front pocket.',
-        price: 45.99,
-        original_price: 55.99,
-        discount: 18,
-        category: 'Hoodies',
-        image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80',
-        rating: '4.8'
-      },
-      {
-        id: 103,
-        name: 'Women\'s Tank Top',
-        description: 'Lightweight and breathable tank top for summer.',
-        price: 19.99,
-        original_price: '',
-        discount: 0,
-        category: 'Tank Tops',
-        image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80',
-        rating: '4.3'
-      },
-      {
-        id: 104,
-        name: 'Classic Polo Shirt',
-        description: 'Professional polo shirt with embroidered logo option.',
-        price: 34.99,
-        original_price: 39.99,
-        discount: 13,
-        category: 'Polo Shirts',
-        image: 'https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80',
-        rating: '4.6'
-      }
-    ];
   } finally {
     loading.value = false;
   }
