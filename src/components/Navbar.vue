@@ -2,18 +2,17 @@
   <nav class="bg-white shadow-lg sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4">
       <div class="flex justify-between items-center h-16">
-       <!-- Logo -->
-<div class="flex items-center space-x-3">
-  <img 
-    src="/src/assets/logo.png" 
-    alt="Customify Logo" 
-    class="w-10 h-10 object-contain scale-110"
-  />
-  <h1 class="text-2xl font-bold text-gray-800 tracking-tight">
-    Customify
-  </h1>
-</div>
-
+        <!-- Logo -->
+        <div class="flex items-center space-x-3">
+          <img 
+            src="/src/assets/logo.png" 
+            alt="Customify Logo" 
+            class="w-10 h-10 object-contain scale-110"
+          />
+          <h1 class="text-2xl font-bold text-gray-800 tracking-tight">
+            Customify
+          </h1>
+        </div>
         
         <!-- Navigation Links -->
         <div class="flex items-center space-x-6">
@@ -27,11 +26,11 @@
             </button>
           </div>
 
-          <!-- Cart -->
+          <!-- Cart - Updated to use real cart data from store -->
           <button @click="$emit('toggle-cart')" class="relative text-gray-700 hover:text-blue-600 transition-colors duration-200">
             🛒 Cart
-            <span v-if="cartCount > 0" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-              {{ cartCount }}
+            <span v-if="cartStore.itemCount > 0" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+              {{ cartStore.itemCount }}
             </span>
           </button>
 
@@ -88,29 +87,35 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
+import { useCartStore } from '../cart.js'
 
+// Reactive data for component state
 const searchQuery = ref('')
 const showLogin = ref(false)
 const isLoggedIn = ref(false)
 
+// Login form data
 const loginForm = ref({
   email: '',
   password: ''
 })
 
-// Mock cart count
-const cartCount = computed(() => 3)
+// Initialize cart store for real cart data
+const cartStore = useCartStore()
 
+// Handle user login
 const handleLogin = () => {
   isLoggedIn.value = true
   showLogin.value = false
   loginForm.value = { email: '', password: '' }
 }
 
+// Handle user logout
 const logout = () => {
   isLoggedIn.value = false
 }
 
+// Define emitted events
 defineEmits(['toggle-cart'])
 </script>

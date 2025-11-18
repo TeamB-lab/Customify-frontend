@@ -1,6 +1,5 @@
 <template>
   <div class="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-cyan-50">
-
     <!-- Navbar -->
     <Navbar @toggle-cart="isCartOpen = true" />
 
@@ -9,44 +8,36 @@
 
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 py-8">
-
       <!-- Hero Section -->
-<section 
-  class="relative overflow-hidden rounded-2xl mb-12 bg-gradient-to-r
-   from-red-500 via-pink-500 to-purple-500 text-gray-800
-   px-6 py-16 md:py-28">
-  
-  <!-- Floating Shapes -->
-  <div class="absolute top-0 left-0 w-32 h-32 bg-white/20 rounded-full animate-bounce-slow"></div>
-  <div class="absolute bottom-0 right-0 w-48 h-48 bg-white/10 rounded-full animate-pulse-slow"></div>
-  <div class="max-w-5xl mx-auto text-center md:text-left relative z-10">
+      <section class="relative overflow-hidden rounded-2xl mb-12 bg-gradient-to-r from-red-500 via-pink-500 to-purple-500 text-gray-800 px-6 py-16 md:py-28">
+        <!-- Floating Shapes -->
+        <div class="absolute top-0 left-0 w-32 h-32 bg-white/20 rounded-full animate-bounce-slow"></div>
+        <div class="absolute bottom-0 right-0 w-48 h-48 bg-white/10 rounded-full animate-pulse-slow"></div>
+        <div class="max-w-5xl mx-auto text-center md:text-left relative z-10">
+          <!-- Heading -->
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-heading font-extrabold mb-6 animate-slide-fade">
+            Welcome to 
+            <span class="bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-gray-300">
+              Customify
+            </span>
+          </h1>
 
-    <!-- Heading -->
-    <h1 class="text-4xl md:text-5xl lg:text-6xl font-heading font-extrabold mb-6 animate-slide-fade">
-      Welcome to 
-      <span class="bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-gray-300">
-        Customify
-      </span>
-    </h1>
+          <!-- Subtext -->
+          <p class="text-lg md:text-xl lg:text-xl font-heading font-medium mb-8 animate-slide-fade animate-delay-200">
+            Discover amazing customized and trendy products at unbeatable prices.
+          </p>
 
-    <!-- Subtext -->
-    <p class="text-lg md:text-xl lg:text-xl font-heading font-medium mb-8 animate-slide-fade animate-delay-200">
-      Discover amazing customized and trendy products at unbeatable prices.
-    </p>
+          <!-- Buttons -->
+          <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+            <div class="flex-1 text-center"></div>  
+            <button class="bg-white text-red-500 px-8 py-4 rounded-2xl font-bold text-lg hover:scale-105 transform transition-all duration-300 shadow-lg hover:shadow-xl animate-bounce">
+              Shop Collection
+            </button>
+          </div>
+        </div>
+      </section>
 
-    <!-- Buttons -->
-    <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-      <div class="flex-1 text-center"></div>  
-      <button class="bg-white text-red-500 px-8 py-4 rounded-2xl font-bold text-lg hover:scale-105 transform transition-all duration-300 shadow-lg hover:shadow-xl animate-bounce">
-        Shop Collection
-      </button>
-    </div>
-  </div>
-</section>
-
-
-
-         <!-- Featured Products --> 
+      <!-- Featured Products --> 
       <section class="mb-12">
         <div class="flex justify-between items-center mb-6">
           <div class="flex-1 text-center">
@@ -84,13 +75,13 @@
         </div>
 
         <!-- Products Grid --> 
-        <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"> 
+        <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- ProductCard components - @add-to-cart event removed as it's now handled internally -->
           <ProductCard 
             v-for="product in featuredProducts" 
             :key="product.id" 
             :product="product"
-            @add-to-cart="addToCart" 
-          /> 
+          />
         </div>
 
         <!-- Empty State -->
@@ -119,69 +110,67 @@
         </div>
       </section>
     </main>
-  </div> 
 
     <!-- Interactive Features Section -->
-<section class="py-20 bg-white">
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-      
-      <!-- Features List -->
-      <div data-aos="fade-right">
-        <h2 class="text-4xl lg:text-5xl font-black text-gray-900 mb-8">
-          Why Choose
-          <span class="bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
-            Us?
-          </span>
-        </h2>
-        
-        <div class="space-y-6">
-          <div 
-            v-for="feature in features" 
-            :key="feature.id"
-            class="flex items-start p-6 rounded-2xl hover:bg-gray-50 transition-all duration-300 group cursor-pointer"
-            @mouseenter="activeFeature = feature.id"
-          >
-            <div class="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center text-white text-2xl mr-6 group-hover:scale-110 transition-transform duration-300">
-              {{ feature.icon }}
-            </div>
-            <div>
-              <h3 class="text-xl font-bold text-gray-900 mb-2">{{ feature.title }}</h3>
-              <p class="text-gray-600 leading-relaxed">{{ feature.description }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Interactive Feature Display -->
-      <div class="relative" data-aos="fade-left">
-        <div class="relative bg-gradient-to-br from-gray-900 to-black rounded-3xl p-8 text-white overflow-hidden">
-          <div class="relative z-10">
-            <h3 class="text-2xl font-bold mb-4">{{ activeFeatureData.title }}</h3>
-            <p class="text-gray-300 mb-6">{{ activeFeatureData.description }}</p>
+    <section class="py-20 bg-white">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <!-- Features List -->
+          <div data-aos="fade-right">
+            <h2 class="text-4xl lg:text-5xl font-black text-gray-900 mb-8">
+              Why Choose
+              <span class="bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
+                Us?
+              </span>
+            </h2>
             
-            <!-- Progress Indicators -->
-            <div class="flex space-x-2 mb-6">
+            <div class="space-y-6">
               <div 
                 v-for="feature in features" 
                 :key="feature.id"
-                class="w-3 h-3 rounded-full transition-all duration-300"
-                :class="activeFeature === feature.id ? 'bg-white' : 'bg-gray-600'"
-              ></div>
-            </div> 
+                class="flex items-start p-6 rounded-2xl hover:bg-gray-50 transition-all duration-300 group cursor-pointer"
+                @mouseenter="activeFeature = feature.id"
+              >
+                <div class="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center text-white text-2xl mr-6 group-hover:scale-110 transition-transform duration-300">
+                  {{ feature.icon }}
+                </div>
+                <div>
+                  <h3 class="text-xl font-bold text-gray-900 mb-2">{{ feature.title }}</h3>
+                  <p class="text-gray-600 leading-relaxed">{{ feature.description }}</p>
+                </div>
+              </div>
+            </div>
           </div>
-          
-          <!-- Animated Background -->
-          <div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-l from-blue-500/20 to-purple-500/20 rounded-full transform translate-x-32 -translate-y-32"></div>
+
+          <!-- Interactive Feature Display -->
+          <div class="relative" data-aos="fade-left">
+            <div class="relative bg-gradient-to-br from-gray-900 to-black rounded-3xl p-8 text-white overflow-hidden">
+              <div class="relative z-10">
+                <h3 class="text-2xl font-bold mb-4">{{ activeFeatureData.title }}</h3>
+                <p class="text-gray-300 mb-6">{{ activeFeatureData.description }}</p>
+                
+                <!-- Progress Indicators -->
+                <div class="flex space-x-2 mb-6">
+                  <div 
+                    v-for="feature in features" 
+                    :key="feature.id"
+                    class="w-3 h-3 rounded-full transition-all duration-300"
+                    :class="activeFeature === feature.id ? 'bg-white' : 'bg-gray-600'"
+                  ></div>
+                </div>
+              </div>
+              
+              <!-- Animated Background -->
+              <div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-l from-blue-500/20 to-purple-500/20 rounded-full transform translate-x-32 -translate-y-32"></div>
+            </div>
+          </div>
         </div>
       </div>
+    </section>
 
-    </div>
+    <!-- Footer -->
+    <Footer />
   </div>
-</section>
-
-<!-- Footer -->
-    <Footer></Footer>
 </template>
 
 <script setup>
@@ -193,12 +182,11 @@ import Footer from './components/Footer.vue'
 import { productsAPI, handleApiError } from './Services/api'
 
 const isCartOpen = ref(false)
-const isFeaturesOpen = ref(false)
+
+// State for products
+const featuredProducts = ref([])
 const loading = ref(false)
 const error = ref(null)
-
-// Mock data
-const featuredProducts = ref([])
 
 const fetchProducts = async () => {
   loading.value = true;
@@ -209,7 +197,6 @@ const fetchProducts = async () => {
     featuredProducts.value = response.data;
     console.log('Products loaded successfully:', featuredProducts.value.length);
   } catch (err) {
-    error.value = handleApiError(err);
     console.error('Error fetching products:', err);
   } finally {
     loading.value = false;
@@ -222,17 +209,12 @@ onMounted(() => {
 });
 
 const categories = ref([
-   { id: 1, name: 'Men Fashion', icon: '👔', description: 'Trendy styles for men' },
+  { id: 1, name: 'Men Fashion', icon: '👔', description: 'Trendy styles for men' },
   { id: 2, name: 'Women Fashion', icon: '👗', description: 'Elegant women wear' },
   { id: 3, name: 'Kids Collection', icon: '👶', description: 'Cute outfits for kids' },
   { id: 4, name: 'Unisex', icon: '👕', description: 'Clothes for Everybody' }
 ])
 
-const addToCart = (product) => {
-  console.log('Added to cart:', product.name)
-  // In a real app,For adding to cart state management
-  alert(`Added ${product.name} to cart!`)
-}
 const features = ref([
   {
     id: 1,
@@ -246,7 +228,7 @@ const features = ref([
     title: 'Easy Returns',
     description: '30-day hassle-free returns. If you are not satisfied, we are here to help.'
   },
-    {
+  {
     id: 3,
     icon: '🔒',
     title: 'Secure Payment',
@@ -265,4 +247,4 @@ const activeFeature = ref(1)
 const activeFeatureData = computed(() => {
   return features.value.find(f => f.id === activeFeature.value) || features.value[0]
 })
-</script> 
+</script>

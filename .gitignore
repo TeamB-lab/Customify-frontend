@@ -2,7 +2,7 @@
 # Dependencies
 # =========================
 # Never commit the massive node_modules folder
-/node_modules
+node_modules
 
 # =========================
 # Build Output
@@ -37,3 +37,7 @@ Thumbs.db
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+package-lock.json
+package.json
+.gitignore
+
