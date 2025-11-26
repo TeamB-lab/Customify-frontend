@@ -1,4 +1,5 @@
 <template>
+<form @submit.prevent="handleRegister"></form> 
   <div class="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-cyan-50 flex flex-col">
     <!-- Simple Header -->
     <header class="bg-white shadow-sm">
@@ -19,7 +20,7 @@
       </div>
     </header>
 
-    <!-- Signup Form Content -->
+    <!-- Register Form Content -->
     <div class="flex-1 flex items-start justify-center py-6 px-4">
       <div class="max-w-md w-full space-y-6">
         <div class="text-center">
@@ -224,8 +225,24 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
+import { authAPI, handleApiError } from '../Services/api'
+
 
 const router = useRouter()
+const handleRegister = async () => {
+  try {
+    const response = await authAPI.signUp({
+      name: form.firstName + ' ' + form.lastName, 
+      email: form.email,
+      password: form.password,
+    });
+
+    alert(response.data.message);
+    router.push('/'); // redirect to home page
+  } catch (error) {
+    alert(handleApiError(error));
+  }
+};
 
 const form = reactive({
   firstName: '',
@@ -247,21 +264,19 @@ const handleSubmit = async () => {
     return
   }
 
-  isSubmitting.value = true
-  
   try {
-    await new Promise(resolve => setTimeout(resolve, 1500))
-    console.log('Form submitted:', form)
-    alert('Account created successfully!')
-    
-    // Redirect to home page after successful signup
-    router.push('/')
-    
+    const response = await authAPI.signUp({
+      name: form.firstName + " " + form.lastName,
+      email: form.email,
+      password: form.password
+    });
+
+    alert(response.data.message || "Account created successfully!");
+    router.push('/'); 
+
   } catch (error) {
-    console.error('Signup error:', error)
-    alert('Error creating account. Please try again.')
-  } finally {
-    isSubmitting.value = false
+    alert(handleApiError(error));
   }
-}
+};
+
 </script>

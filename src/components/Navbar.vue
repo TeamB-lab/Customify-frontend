@@ -3,25 +3,23 @@
     <div class="max-w-7xl mx-auto px-4">
       <div class="flex justify-between items-center h-16">
         <!-- Logo -->
-         <router-link to="/">
-        <div class="flex items-center space-x-3">
-          <img 
-            src="/src/assets/logo.png" 
-            alt="Customify Logo" 
-            class="w-10 h-10 object-contain scale-110"
-          />
-          <h1 class="text-2xl font-bold text-gray-800 tracking-tight">
-            Customify
-          </h1>
-        </div>
+        <router-link to="/">
+          <div class="flex items-center space-x-3">
+            <img 
+              src="/src/assets/logo.png" 
+              alt="Customify Logo" 
+              class="w-10 h-10 object-contain scale-110"
+            />
+            <h1 class="text-2xl font-bold text-gray-800 tracking-tight">
+              Customify
+            </h1>
+          </div>
         </router-link>
         
         <!-- Navigation Links -->
         <div class="flex items-center space-x-6">
-           <router-link to='/' class="text-gray-700 hover:text-blue-600 transition-colors duration-200">Home</router-link>
-          <router-link to='/Products'class="text-gray-700 hover:text-blue-600 transition-colors duration-200">Products</router-link>
-          
-      
+          <router-link to="/" class="text-gray-700 hover:text-blue-600 transition-colors duration-200">Home</router-link>
+          <router-link to="/Products" class="text-gray-700 hover:text-blue-600 transition-colors duration-200">Products</router-link>
 
           <!-- Cart -->
           <button @click="$emit('toggle-cart')" class="relative text-gray-700 hover:text-blue-600 transition-colors duration-200">
@@ -31,30 +29,30 @@
             </span>
           </button>
 
-<!-- Auth Buttons -->
-<div class="flex space-x-4">
-  <button v-if="!isLoggedIn" @click="showLogin = true" class="btn-secondary text-sm">
-    Sign In
-  </button>
-  <router-link
-    v-if="!isLoggedIn"
-    to="/signup"
-    class="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition"
-  >
-    Sign Up
-  </router-link>
+          <!-- Auth Buttons -->
+          <div class="flex space-x-4">
+            <button v-if="!isLoggedIn" @click="showLogin = true" class="btn-secondary text-sm">
+              Sign In
+            </button>
+            <router-link
+              v-if="!isLoggedIn"
+              to="/Register"
+              class="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition"
+            >
+              Sign Up
+            </router-link>
 
-  <div v-else class="flex items-center space-x-2">
-    <span class="text-gray-700">Welcome, User!</span>
-    <button @click="logout" class="text-gray-500 hover:text-red-600">Logout</button>
-  </div>
-</div>
+            <div v-else class="flex items-center space-x-2">
+              <span class="text-gray-700">Welcome, {{ user?.name }}</span>
+              <button @click="logout" class="text-gray-500 hover:text-red-600">Logout</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </nav>
 
-  <!-- Login Modal -->
+  <!-- Sign In Modal -->
   <div v-if="showLogin" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
     <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
       <h2 class="text-2xl font-bold mb-6 text-center">Sign In</h2>
@@ -79,7 +77,9 @@
             required
           >
         </div>
-        <button type="submit" class="w-full btn-primary">Sign In</button>
+        <button type="submit" class="w-full btn-primary">
+          Sign In
+        </button>
       </form>
       <button @click="showLogin = false" class="w-full mt-4 text-gray-500 hover:text-gray-700">
         Cancel
@@ -89,35 +89,75 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 import { useCartStore } from '../cart.js'
+import { authAPI, handleApiError, } from '../Services/api'
+import { useRouter } from 'vue-router'
+ import apiClient from '../Services/api' 
 
-
-// Reactive data for component state
-const searchQuery = ref('')
+// Reactive states
 const showLogin = ref(false)
 const isLoggedIn = ref(false)
+const user = ref(null)  // Stores logged-in user info
 
 
 // Login form data
-const loginForm = ref({
+const loginForm = reactive({
   email: '',
   password: ''
 })
 
-// Initialize cart store for real cart data
+// Initialize cart store
 const cartStore = useCartStore()
 
-// Handle user login
-const handleLogin = () => {
-  isLoggedIn.value = true
-  showLogin.value = false
-  loginForm.value = { email: '', password: '' }
+// Router instance
+const router = useRouter()
+
+// Handle user login with backend API
+const handleLogin = async () => {
+  if (!loginForm.email || !loginForm.password) {
+    alert('Please enter both email and password')
+    return
+  }
+
+  try {
+    const response = await authAPI.login({
+      email: loginForm.email,
+      password: loginForm.password
+    })
+
+    console.log('Login successful:', response.data)
+
+    // Store token for future API calls
+    localStorage.setItem('token', response.data.token)
+    apiClient.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`
+
+    // Update UI
+    isLoggedIn.value = true
+    user.value = response.data.user
+    showLogin.value = false
+
+    // Reset form
+    loginForm.email = ''
+    loginForm.password = ''
+
+    alert(`Welcome, ${response.data.user.name}!`)
+
+    // Redirect to homepage after login
+    router.push('/')  
+
+  } catch (error) {
+    console.error('Login error:', error)
+    alert(handleApiError(error))
+  }
 }
 
 // Handle user logout
 const logout = () => {
   isLoggedIn.value = false
+  user.value = null
+  localStorage.removeItem('token')
+  delete apiClient.defaults.headers.common['Authorization']
 }
 
 // Define emitted events

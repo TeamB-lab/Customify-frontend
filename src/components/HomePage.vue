@@ -3,14 +3,6 @@
     <!-- Navbar -->
     <Navbar @toggle-cart="isCartOpen = true" />
     
-    <!-- SignIn Modal -->
-    <SignIn 
-      v-if="isLoginOpen" 
-      :isOpen="isLoginOpen" 
-      @close="isLoginOpen = false"
-      @login-success="handleLoginSuccess"
-    />
-
     <!-- Cart Sidebar -->
     <CartSidebar :isOpen="isCartOpen" @close="isCartOpen = false" />
          
@@ -192,10 +184,6 @@ import CartSidebar from './CartSidebar.vue'
 import Footer from './Footer.vue'
 import { productsAPI, handleApiError } from '../Services/api'
 import { User, UserRound, Baby, Users } from 'lucide-vue-next' 
-// import LoginPage from './LoginPage.vue'
-import Products from './Products.vue' 
-
-
 
 
 const isCartOpen = ref(false)
