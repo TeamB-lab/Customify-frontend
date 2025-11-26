@@ -3,6 +3,7 @@
     <div class="max-w-7xl mx-auto px-4">
       <div class="flex justify-between items-center h-16">
         <!-- Logo -->
+         <router-link to="/">
         <div class="flex items-center space-x-3">
           <img 
             src="/src/assets/logo.png" 
@@ -13,20 +14,16 @@
             Customify
           </h1>
         </div>
+        </router-link>
         
         <!-- Navigation Links -->
         <div class="flex items-center space-x-6">
-          <a href="#" class="text-gray-700 hover:text-blue-600 transition-colors duration-200">Home</a>
-          <a href="#" class="text-gray-700 hover:text-blue-600 transition-colors duration-200">Products</a>
+           <router-link to='/' class="text-gray-700 hover:text-blue-600 transition-colors duration-200">Home</router-link>
+          <router-link to='/Products'class="text-gray-700 hover:text-blue-600 transition-colors duration-200">Products</router-link>
           
-          <!-- Categories Dropdown -->
-          <div class="relative group">
-            <button class="text-gray-700 hover:text-blue-600 transition-colors duration-200 flex items-center">
-              Categories ▾
-            </button>
-          </div>
+      
 
-          <!-- Cart - Updated to use real cart data from store -->
+          <!-- Cart -->
           <button @click="$emit('toggle-cart')" class="relative text-gray-700 hover:text-blue-600 transition-colors duration-200">
             🛒 Cart
             <span v-if="cartStore.itemCount > 0" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
@@ -34,19 +31,24 @@
             </span>
           </button>
 
-          <!-- Auth Buttons -->
-          <div class="flex space-x-4">
-            <button v-if="!isLoggedIn" @click="showLogin = true" class="btn-secondary text-sm">
-              Sign In
-            </button>
-            <button v-if="!isLoggedIn" class="btn-primary text-sm">
-              Sign Up
-            </button>
-            <div v-else class="flex items-center space-x-2">
-              <span class="text-gray-700">Welcome, User!</span>
-              <button @click="logout" class="text-gray-500 hover:text-red-600">Logout</button>
-            </div>
-          </div>
+<!-- Auth Buttons -->
+<div class="flex space-x-4">
+  <button v-if="!isLoggedIn" @click="showLogin = true" class="btn-secondary text-sm">
+    Sign In
+  </button>
+  <router-link
+    v-if="!isLoggedIn"
+    to="/signup"
+    class="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition"
+  >
+    Sign Up
+  </router-link>
+
+  <div v-else class="flex items-center space-x-2">
+    <span class="text-gray-700">Welcome, User!</span>
+    <button @click="logout" class="text-gray-500 hover:text-red-600">Logout</button>
+  </div>
+</div>
         </div>
       </div>
     </div>
@@ -90,10 +92,12 @@
 import { ref } from 'vue'
 import { useCartStore } from '../cart.js'
 
+
 // Reactive data for component state
 const searchQuery = ref('')
 const showLogin = ref(false)
 const isLoggedIn = ref(false)
+
 
 // Login form data
 const loginForm = ref({
@@ -117,5 +121,5 @@ const logout = () => {
 }
 
 // Define emitted events
-defineEmits(['toggle-cart'])
+defineEmits(['toggle-cart', 'open-signup'])
 </script>

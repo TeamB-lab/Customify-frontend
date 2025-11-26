@@ -48,3 +48,28 @@
 .animate-pulse-slow {
   animation: bounceSlow 6s ease-in-out infinite;
 }
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Ensure animations work */
+.animate-bounce-slow {
+  animation: bounce-slow 3s infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 4s infinite;
+}
+
+.animate-slide-fade {
+  animation: slide-fade 0.8s ease-out;
+}
+
+.animate-delay-200 {
+  animation-delay: 0.2s;
+}

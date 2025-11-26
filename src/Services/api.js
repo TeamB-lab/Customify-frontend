@@ -11,6 +11,13 @@ const apiClient = axios.create({
 export const productsAPI = {
   getProducts() {
     console.log('🔄 Fetching products from Render backend...');
+    return apiClient.get('/api/products4');
+  },
+};
+
+export const allproductsAPI = {
+  getProducts() {
+    console.log('🔄 Fetching products from Render backend...');
     return apiClient.get('/api/products');
   },
 };
