@@ -10,6 +10,9 @@ export const useCartStore = defineStore('cart', () => {
     items.value.reduce((sum, item) => sum + (item.price * item.quantity), 0)
   )
   
+  // 添加 totalPrice 作为 total 的别名，确保与结账页面兼容
+  const totalPrice = computed(() => total.value)
+  
   // Computed property - total quantity of all items in cart
   const itemCount = computed(() => 
     items.value.reduce((count, item) => count + item.quantity, 0)
@@ -32,6 +35,9 @@ export const useCartStore = defineStore('cart', () => {
         quantity: 1 
       })
     }
+    
+    // 可选：保存到 localStorage 以持久化
+    saveToLocalStorage()
   }
   
   // Action - remove item from cart
@@ -40,6 +46,9 @@ export const useCartStore = defineStore('cart', () => {
     if (index !== -1) {
       items.value.splice(index, 1)
     }
+    
+    // 可选：保存到 localStorage 以持久化
+    saveToLocalStorage()
   }
   
   // Action - update quantity of specific item in cart
@@ -52,11 +61,19 @@ export const useCartStore = defineStore('cart', () => {
         item.quantity = quantity
       }
     }
+    
+    // 可选：保存到 localStorage 以持久化
+    saveToLocalStorage()
   }
   
-  // Action - clear all items from cart
+  // Action - clear all items from cart (用于下单成功后清空购物车)
   const clearCart = () => {
     items.value = []
+    
+    // 可选：同时清除 localStorage
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('cart')
+    }
   }
   
   // Getter - check if item is in cart
@@ -70,12 +87,37 @@ export const useCartStore = defineStore('cart', () => {
     return item ? item.quantity : 0
   }
   
+  // 新增：从 localStorage 加载购物车数据
+  const loadFromLocalStorage = () => {
+    if (typeof window !== 'undefined') {
+      const savedCart = localStorage.getItem('cart')
+      if (savedCart) {
+        try {
+          items.value = JSON.parse(savedCart)
+        } catch (e) {
+          console.error('Failed to parse saved cart:', e)
+        }
+      }
+    }
+  }
+  
+  // 新增：保存购物车数据到 localStorage
+  const saveToLocalStorage = () => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('cart', JSON.stringify(items.value))
+    }
+  }
+  
+  // 新增：初始化时从 localStorage 加载数据
+  loadFromLocalStorage()
+  
   return {
     // State
     items,
     
     // Computed properties
     total,
+    totalPrice, // 新增：确保与结账页面兼容
     itemCount,
     uniqueItemCount,
     
@@ -85,6 +127,10 @@ export const useCartStore = defineStore('cart', () => {
     updateQuantity,
     clearCart,
     isInCart,
-    getItemQuantity
+    getItemQuantity,
+    
+    // 新增：持久化相关方法
+    loadFromLocalStorage,
+    saveToLocalStorage
   }
 })
