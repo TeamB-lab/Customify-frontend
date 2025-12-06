@@ -1,6 +1,5 @@
 <template>
   <div class="checkout-page min-h-screen bg-gray-50">
-    <Navbar />
     
     <div class="container mx-auto px-4 py-8 max-w-4xl">
       <h1 class="text-3xl font-bold text-gray-900 mb-8">Checkout</h1>
@@ -127,7 +126,6 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useCartStore } from '../cart.js'  // 这里修改了导入路径
-import Navbar from '../components/Navbar.vue'
 
 const router = useRouter()
 const cartStore = useCartStore()
