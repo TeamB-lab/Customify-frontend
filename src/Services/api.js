@@ -8,12 +8,34 @@ const apiClient = axios.create({
   },
 });
 
+// ================= Products =================
 export const productsAPI = {
+  getProducts() {
+    console.log('🔄 Fetching products from Render backend...');
+    return apiClient.get('/api/products4');
+  },
+};
+
+export const allproductsAPI = {
   getProducts() {
     console.log('🔄 Fetching products from Render backend...');
     return apiClient.get('/api/products');
   },
 };
+
+// ================ Authentication ================
+export const authAPI = {
+  signUp(userData) {
+    console.log('🔄 Signing up user...');
+    return apiClient.post('/api/auth/register', userData);
+  },
+
+  login(credentials) {
+    console.log('🔄 Logging in user...');
+    return apiClient.post('/api/auth/login', credentials);
+  }
+};
+
 
 export const handleApiError = (error) => {
   console.error('🔴 API Error Details:', error);

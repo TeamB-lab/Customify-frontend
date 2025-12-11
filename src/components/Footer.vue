@@ -11,7 +11,7 @@
             <h4 class="font-semibold mb-4">Quick Links</h4>
             <ul class="space-y-2 text-gray-400">
               <li><a href="#" class="hover:text-white transition-colors duration-200">Home</a></li>
-              <li><a href="#" class="hover:text-white transition-colors duration-200">Products</a></li>
+              <li><router-link to="/Products" class="hover:text-white transition-colors duration-200">Products</router-link></li>
               <li><a href="#" class="hover:text-white transition-colors duration-200">About</a></li>
               <li><a href="#" class="hover:text-white transition-colors duration-200">Contact</a></li>
             </ul>
