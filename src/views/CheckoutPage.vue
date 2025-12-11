@@ -125,12 +125,13 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useCartStore } from '../cart.js'  // 这里修改了导入路径
+import { useCartStore } from '../cart.js'
 
 const router = useRouter()
 const cartStore = useCartStore()
 const isSubmitting = ref(false)
 
+// Shipping info is collected for the frontend form but currently not sent to the backend.
 const shippingInfo = ref({
   fullName: '',
   email: '',
@@ -149,40 +150,56 @@ const handleOrderSubmit = async () => {
     return
   }
 
+  // 1. Retrieve the JWT Token from localStorage
+  // Ensure 'jwtToken' matches the key used during login storage.
+  const token = localStorage.getItem('jwtToken');
+
+  if (!token) {
+    alert("You must be logged in to place an order.");
+    // Optional: Redirect to login page
+    // router.push('/login');
+    return;
+  }
+
   isSubmitting.value = true
 
   try {
+    // 2. Prepare the payload for the backend
+    // We only send what the backend expects: items (with correct product_id mapping) and total_amount.
     const orderPayload = {
-      shippingInfo: shippingInfo.value,
       items: cartItems.value.map(item => ({
-        productId: item.id,
-        name: item.name,
-        price: item.price,
-        quantity: item.quantity
+        product_id: item.id, // Using snake_case 'product_id' as expected by the backend database
+        quantity: item.quantity,
+        price: item.price
       })),
-      totalAmount: totalPrice.value,
-      orderDate: new Date().toISOString()
+      total_amount: totalPrice.value
     }
 
-    const response = await fetch('/api/orders', {
+    // 3. Make the API call with the token
+    // Using the full Render backend URL.
+    const response = await fetch('https://customify-backend.onrender.com/api/orders', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        // Add the Authorization header with the token
+        'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify(orderPayload)
     })
 
     if (response.ok) {
-      // Clear cart and redirect to thank you page
+      // Success case
+      console.log("Order placed successfully!");
       cartStore.clearCart()
-      router.push('/thank-you')
+      router.push('/thank-you') // Ensure this route exists or redirect to home '/'
     } else {
+      // Error case (e.g., 401 Unauthorized or 500 Server Error)
       const errorData = await response.json()
-      throw new Error(errorData.message || 'Failed to place order')
+      throw new Error(errorData.message || errorData.error || 'Failed to place order')
     }
   } catch (error) {
     console.error('Error placing order:', error)
-    alert('Failed to place order. Please try again.')
+    alert(`Failed to place order: ${error.message}`)
   } finally {
     isSubmitting.value = false
   }
