@@ -42,9 +42,13 @@
           <span>Total:</span>
           <span>${{ cartStore.total.toFixed(2) }}</span>
         </div>
-        <button class="w-full btn-success text-lg py-3">
+        <router-link 
+          to="/checkout" 
+          class="block w-full bg-green-600 hover:bg-green-700 text-white text-center text-lg py-3 rounded-lg transition-colors duration-200"
+          @click="$emit('close')"
+        >
           Checkout
-        </button>
+        </router-link>
         <button @click="clearCart" class="w-full border border-red-300 text-red-600 py-2 rounded-lg hover:bg-red-50 transition-colors duration-200">
           Clear Cart
         </button>
