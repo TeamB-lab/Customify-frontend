@@ -1,9 +1,7 @@
 <template>
   <div class="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-cyan-50">
-    <!-- Navbar -->
     <Navbar @toggle-cart="isCartOpen = true" />
     
-    <!-- SignIn Modal -->
     <SignIn 
       v-if="isLoginOpen" 
       :isOpen="isLoginOpen" 
@@ -11,18 +9,13 @@
       @login-success="handleLoginSuccess"
     />
 
-    <!-- Cart Sidebar -->
     <CartSidebar :isOpen="isCartOpen" @close="isCartOpen = false" />
          
-    <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 py-8">
-      <!-- Header Section -->
       <section class="relative overflow-hidden rounded-2xl mb-12 bg-gradient-to-r from-green-500 via-blue-500 to-purple-500 text-gray-800 px-6 py-16 md:py-20">
-        <!-- Floating Shapes -->
         <div class="absolute top-0 left-0 w-32 h-32 bg-white/20 rounded-full animate-bounce-slow"></div>
         <div class="absolute bottom-0 right-0 w-48 h-48 bg-white/10 rounded-full animate-pulse-slow"></div>
         <div class="max-w-5xl mx-auto text-center relative z-10">
-          <!-- Heading -->
           <h1 class="text-4xl md:text-5xl lg:text-6xl font-heading font-extrabold mb-6 animate-slide-fade">
             Our Complete
             <span class="bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-gray-300">
@@ -30,15 +23,12 @@
             </span>
           </h1>
 
-          <!-- Subtext -->
           <p class="text-lg md:text-xl lg:text-xl font-heading font-medium mb-8 animate-slide-fade animate-delay-200">
             Discover all our amazing customized and trendy products in one place.
           </p>
 
-          <!-- Search and Filter Bar -->
           <div class="max-w-2xl mx-auto bg-white/90 backdrop-blur-sm rounded-2xl p-4 shadow-lg">
             <div class="flex flex-col md:flex-row gap-4">
-              <!-- Search Input -->
               <div class="flex-1 relative">
                 <input 
                   v-model="searchQuery"
@@ -51,7 +41,6 @@
                 </svg>
               </div>
               
-              <!-- Category Filter -->
               <select 
                 v-model="selectedCategory"
                 class="px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
@@ -66,9 +55,7 @@
         </div>
       </section>
 
-      <!-- Products Grid Section -->
       <section class="mb-12">
-        <!-- Results Header -->
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
           <div>
             <h2 class="text-3xl font-bold text-gray-800 mb-2">
@@ -83,7 +70,6 @@
             </p>
           </div>
           
-          <!-- Sort Options -->
           <div class="flex items-center gap-4">
             <select 
               v-model="sortBy"
@@ -95,7 +81,6 @@
               <option value="newest">Newest First</option>
             </select>
             
-            <!-- View Toggle -->
             <div class="flex bg-white rounded-lg border border-gray-200 p-1">
               <button 
                 @click="gridView = true"
@@ -119,7 +104,6 @@
           </div>
         </div>
 
-        <!-- Loading State -->
         <div v-if="loading" class="flex justify-center items-center py-20">
           <div class="text-center">
             <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-4"></div>
@@ -127,7 +111,6 @@
           </div>
         </div>
 
-        <!-- Error State -->
         <div v-else-if="error" class="bg-red-50 border border-red-200 rounded-2xl p-8 text-center max-w-2xl mx-auto">
           <div class="text-red-600 text-6xl mb-4">😞</div>
           <div class="text-red-600 text-xl font-semibold mb-2">Failed to load products</div>
@@ -140,7 +123,6 @@
           </button>
         </div>
 
-        <!-- No Results State -->
         <div v-else-if="!loading && filteredProducts.length === 0" class="text-center py-20">
           <div class="text-gray-400 text-8xl mb-6">🔍</div>
           <h2 class="text-3xl font-semibold text-gray-600 mb-4">No products found</h2>
@@ -167,9 +149,7 @@
           </div>
         </div>
 
-        <!-- Products Grid/List -->
         <div v-else>
-          <!-- Grid View -->
           <div 
             v-if="gridView"
             class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
@@ -182,7 +162,6 @@
             />
           </div>
           
-          <!-- List View -->
           <div v-else class="space-y-4" data-aos="fade-up">
             <div 
               v-for="product in filteredProducts" 
@@ -190,7 +169,6 @@
               class="bg-white rounded-2xl p-6 hover:shadow-lg transition-all duration-300 border border-gray-200"
             >
               <div class="flex flex-col md:flex-row gap-6 items-center">
-                <!-- Product Image -->
                 <div class="w-full md:w-48 h-48 flex-shrink-0">
                   <img 
                     :src="product.image" 
@@ -199,7 +177,6 @@
                   >
                 </div>
                 
-                <!-- Product Details -->
                 <div class="flex-1">
                   <h3 class="text-xl font-bold text-gray-800 mb-2">{{ product.name }}</h3>
                   <p class="text-gray-600 mb-4 line-clamp-2">{{ product.description }}</p>
@@ -214,7 +191,6 @@
             </div>
           </div>
 
-          <!-- Load More Button (if implementing pagination) -->
           <div v-if="hasMoreProducts && !loading" class="text-center mt-12">
             <button 
               @click="loadMoreProducts"
@@ -226,7 +202,6 @@
         </div>
       </section>
 
-      <!-- Quick Categories Navigation -->
       <section class="mb-16">
         <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Browse Categories</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -245,7 +220,6 @@
       </section>
     </main>
 
-    <!-- Footer -->
     <Footer />
   </div>
 </template>
@@ -315,7 +289,7 @@ const fetchProducts = async () => {
 // Load more products for pagination
 const loadMoreProducts = async () => {
   currentPage.value++
-  // we'll just simulate loading more here
+  // Simulate loading more here
   console.log('Loading more products...')
 }
 
@@ -335,7 +309,8 @@ const filteredProducts = computed(() => {
   // Category filter
   if (selectedCategory.value !== 'all') {
     filtered = filtered.filter(product => 
-      product.categoryId === selectedCategory.value
+      // Using loose equality (==) to handle potential type mismatches (string vs number) for IDs
+      product.categoryId == selectedCategory.value
     )
   }
 
@@ -361,7 +336,7 @@ const filteredProducts = computed(() => {
 
 // Helper functions
 const getCategoryName = (categoryId) => {
-  const category = categories.value.find(cat => cat.id === categoryId)
+  const category = categories.value.find(cat => cat.id == categoryId)
   return category ? category.name : 'Unknown'
 }
 
