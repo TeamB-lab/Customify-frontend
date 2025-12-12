@@ -122,6 +122,7 @@
 </template>
 
 <script setup>
+import { useAuthStore } from '../auth.js'
 import { ref, reactive } from 'vue'
 import { authAPI } from '../services/api.js'
 
